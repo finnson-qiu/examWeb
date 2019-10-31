@@ -3,6 +3,7 @@
     <div class="logoBox"><img alt="logo" :src="logo" style="width: 70%; height:8%"></div>
     <div class="loginMode">
         <div class="loginLogoBox"><img alt="login" :src="loginLogo"></div>
+      //表单，用户输入的地方还有按钮
       <el-form :model="userForm" status-icon :rules="rules" ref="userForm" label-width="100px" class="demo-ruleForm">
         <el-form-item prop="userName">
           <el-col :span="8">
@@ -24,8 +25,8 @@
           </el-col>
         </el-form-item>
       <el-form-item>
-        <el-col :span="2"><a :href ="'http://localhost:8080/#/register'" style="color: aquamarine">现在注册</a></el-col>
-        <el-col :span="10"><a :href = "'http://localhost:8080/#/forget'" style="color: aquamarine">忘记密码</a></el-col>
+        <el-col :span="6" style="text-align: left">&nbsp;<router-link  :to="{path:'/register'}" style="color: aquamarine">现在注册</router-link>></el-col>
+        <el-col :span="6" style="text-align: left">&nbsp;&nbsp;<router-link  :to="{path:'/forget'}" style="color: aquamarine">忘记密码</router-link>></el-col>
       </el-form-item>
       </el-form>
     </div>
@@ -38,6 +39,7 @@
   import loginLogo from "../assets/images/loginLogoBlack.png"
 export default {
   data(){
+      // 规则，用于前端验证用户名是否合法
     const validateUserName = (rule, value, callback) => {
       if(value === ''){
         callback(new Error('请输入用户名'))
@@ -49,6 +51,7 @@ export default {
         callback()
       }
     }
+    //规则，用于前端验证密码是否合法
     const validatePassword = (rule, value, callback) => {
       if(value === ''){
         callback(new Error('请输入密码'))
@@ -78,17 +81,38 @@ export default {
     }
   },
   methods:{
+      // 用户登录，后端返回数字，0代表用户不存在，1，2，3登录成功，并且1为超级管理员，2为管理员，3为普通用户
       login(){
+          // 前端设置规则验证，只有前端规则验证通过才会向后端发送请求
         this.$refs['userForm'].validate((valid) => {
           if (valid) {
             login(this.userForm).then(res=> {
-              if(res === 1){
-                this.$message({
-                  message: '登录成功',
-                  type: 'success',
-                  center: true
-                });
-                this.$router.push('/home')
+              if(res === 1 || res === 2 || res === 3){
+                  if(res === 1 || res === 2){
+                      if(res === 1) {
+                          this.$message({
+                              message: '欢迎您，超级管理员',
+                              type: 'success',
+                              center: true
+                          });
+                      }
+                      else {
+                          this.$message({
+                              message: '欢迎您，管理员',
+                              type: 'success',
+                              center: true
+                          });
+                      }
+                      this.$router.push({path:'/admin',query: {user:this.userForm.userName}});
+                  }
+                  else {
+                      this.$message({
+                          message: '登录成功',
+                          type: 'success',
+                          center: true
+                      });
+                      this.$router.push({path:'/home',query: {user:this.userForm.userName}})
+                  }
               }
               else if(res === 0){
                 this.$message({
@@ -121,7 +145,7 @@ export default {
 
 <style scoped>
 .loginMode{
-  margin-left: 34%;
+  margin-left: 35%;
   margin-top: 6%;
 }
 .textBox{
@@ -131,7 +155,7 @@ export default {
   height: 20px;
 }
   .logoBox{
-    margin-left: 22%;
+    margin-left: 23%;
     margin-top: 3%;
   }
   .loginLogoBox{

@@ -51,6 +51,7 @@
 
   export default {
     data(){
+        // 规则，前端验证用户名是否合法
       const validateUserName = (rule,value,callback) =>{
         if(value === ''){
           callback(new Error('请输入用户名'))
@@ -62,6 +63,7 @@
           callback()
         }
       }
+      // 新密码规则，验证输入的密码是否合法
       const validatePassword = (rule,value,callback) =>{
         if (value === '') {
           callback(new Error('请输入密码'));
@@ -74,6 +76,7 @@
           }
         }
       }
+      // 确定密码规则，验证两次密码是否输入相同
       const validateComPassword = (rule,value,callback) =>{
         if (value === '') {
           callback(new Error('请再次输入密码'));
@@ -83,6 +86,7 @@
           callback();
         }
       }
+      // 规则，验证身份证是否合法
       const validateId = (rule,value,callback) =>{
         if(value === ''){
           callback(new Error('请输入身份证号'));
@@ -102,6 +106,7 @@
           comPassword:'',
           idNumber:''
         },
+          // 规则的声明
         rules:{
           userName:[
             {validator: validateUserName, trigger: 'blur'}
@@ -120,6 +125,7 @@
     },
     methods:{
       change(){
+          //前端根据规则验证表单信息是否合法，合法则向后端发起请求，根据返回的数字，判断修改结果
         this.$refs['forgetForm'].validate((valid) =>{
           if(valid){
             changePa(this.forgetForm).then(res =>{
@@ -160,6 +166,7 @@
           }
         })
       },
+        // 取消按钮操作，回到登录界面
       cancel(){
         this.$router.go(-1)
       }
@@ -168,7 +175,7 @@
 </script>
 <style scoped>
   .logoBox{
-    margin-left: 22%;
+    margin-left: 23%;
     margin-top: 3%;
   }
   .forLogo{

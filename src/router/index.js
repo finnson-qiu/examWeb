@@ -4,6 +4,7 @@ import home from '../pages/home'
 import login from '../pages/login'
 import register from '../pages/register'
 import forget from '../pages/forget'
+import admin from '../pages/admin'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/home',
       name:'homePage',
       component: home
+    },
+    {
+      path: '/admin',
+      name: 'adminPage',
+      component: admin
     }
   ]
 })

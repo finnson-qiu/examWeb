@@ -1,14 +1,12 @@
 import fetch from '../utils/fetch'
 
 export function getAllSubject() {
-  const TMPURL = '';
   const obj = '';
-  return fetch.get(TMPURL+'api/user/subject',obj)
+  return fetch.get('api/user/subject',obj)
 }
 
 export function validateUser(obj) {
-  const TMPURL = '';
-  return fetch.post(TMPURL+'api/user/validateUser',obj)
+  return fetch.post('api/user/validateUser',obj)
 }
 
 export function register(obj) {
@@ -21,4 +19,24 @@ export function login(obj) {
 
 export function changePa(obj) {
   return fetch.post('api/user/changePassword',obj)
+}
+
+export function getPermission(obj) {
+  return fetch.post('api/user/getPermission',obj)
+}
+
+export function getAllUser(obj) {
+  return fetch.post('api/user/getAllUser',obj)
+}
+
+export function updatePermission(obj) {
+  return fetch.post('api/user/updatePermission',obj)
+}
+
+export function deleteUser(obj) {
+  return fetch.post('api/user/deleteUser',obj)
+}
+
+export function getUserCount() {
+  return fetch.get('api/user/userCount')
 }

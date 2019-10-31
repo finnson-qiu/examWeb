@@ -3,6 +3,7 @@
     <div class="logoBox"><img alt="logo" :src="logo" style="width: 70%; height:8%"></div>
     <div class="registerBox">
       <div class="reLogoBox"><img alt="register" :src="registerLogo" style="width: 80%"></div>
+      // 注册表单，包含输入框和按钮
       <el-form :model="userForm" status-icon :rules="rules" ref="userForm" label-width="100px" class="demo-ruleForm">
         <el-form-item prop="userName">
         <el-col :span="8">
@@ -44,7 +45,7 @@
           <el-input disabled placeholder=" 科目" ></el-input>
         </el-col>
         <el-col :span="6">
-        <el-select v-model="userForm.subject" placeholder="请选择所授科目">
+        <el-select v-model="userForm.subjectNo" placeholder="请选择所授科目">
           <el-option
             v-for="item in subOptions"
             :key="item.subjectNo"
@@ -74,6 +75,7 @@
 
   export default {
     data(){
+        // 规则，前端验证用户名是否合法，并且会向后端发送请求判断该用户是否存在
       const validateUserName = (rule, value, callback) => {
         if(value === '') {
           callback(new Error('请输入用户名'))
@@ -95,6 +97,7 @@
           })
         }
       }
+      //规则，判断输入的密码是否符合规则
       const validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
@@ -107,6 +110,7 @@
           }
         }
       };
+      // 规则，判断确定密码是否和前面输入的密码一样
       const validatePass2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'));
@@ -116,6 +120,7 @@
           callback();
         }
       };
+      // 身份证规则
       const validateId = (rule, value, callback) => {
         if(value === ''){
           callback(new Error('请输入身份证号'));
@@ -126,6 +131,7 @@
           callback()
         }
       }
+      // 教师的姓名的规则
       const validateName = (rule,value,callback) =>{
         if(value === ''){
           callback(new Error('请输入姓名'));
@@ -137,6 +143,7 @@
           callback()
         }
       }
+      // 所授科目需要选择
       const validateSubject = (rule,value,callback) => {
         if(value === ''){
           callback(new Error('请选择所授科目'))
@@ -155,8 +162,9 @@
           conPassword: '',
           name: '',
           idNumber: '',
-          subject: ''
+          subjectNo: ''
         },
+          //这是表单规则的声明，上面那些是定义
         rules: {
           userName: [
             { validator: validateUserName, trigger: 'blur' }
@@ -173,16 +181,18 @@
           name: [
             {validator: validateName, trigger: 'blur'}
           ],
-          subject: [
+          subjectNo: [
             {validator: validateSubject, trigger: 'blur'}
           ]
         }
       }
     },
     created(){
+        //在该页面创建时调用该函数获取数据库里已经存在的科目放到下拉框
       this.getSubject()
     },
     methods:{
+        //获取所有科目的函数
       getSubject(){
         getAllSubject().then(res=>{
           this.subOptions = res
@@ -190,6 +200,7 @@
           alert(err)
         })
       },
+        //注册功能，只有表单通过规定的规则才会向后端发起请求，注册成功会返回到登录页面
       register(){
         this.$refs['userForm'].validate((valid) => {
           if (valid) {
@@ -219,6 +230,7 @@
           }
         });
       },
+        //取消按钮行为，路由回退1，返回到登录页面
       cancel(){
         this.$router.go(-1)
       }
@@ -235,7 +247,7 @@
     margin-left: 10%;
   }
   .reLogoBox{
-    margin-left: 12%;
+    margin-left: 11%;
     margin-bottom: 30px;
   }
   .logoBox{
