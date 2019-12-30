@@ -3,11 +3,10 @@
     <div class="logoBox"><img alt="logo" :src="logo" style="width: 70%; height:8%"></div>
     <div class="loginMode">
         <div class="loginLogoBox"><img alt="login" :src="loginLogo"></div>
-      //表单，用户输入的地方还有按钮
       <el-form :model="userForm" status-icon :rules="rules" ref="userForm" label-width="100px" class="demo-ruleForm">
         <el-form-item prop="userName">
           <el-col :span="8">
-            <el-input id="name" v-model="userForm.userName" placeholder="请输入帐号">
+            <el-input id="userName" v-model="userForm.userName" placeholder="请输入帐号">
               <template slot="prepend">帐号</template>
             </el-input>
           </el-col>
@@ -25,8 +24,8 @@
           </el-col>
         </el-form-item>
       <el-form-item>
-        <el-col :span="6" style="text-align: left">&nbsp;<router-link  :to="{path:'/register'}" style="color: aquamarine">现在注册</router-link>></el-col>
-        <el-col :span="6" style="text-align: left">&nbsp;&nbsp;<router-link  :to="{path:'/forget'}" style="color: aquamarine">忘记密码</router-link>></el-col>
+        <el-col :span="6" style="text-align: left">&nbsp;<router-link  :to="{path:'/register'}" style="color: aquamarine" id="toRegister">现在注册</router-link>></el-col>
+        <el-col :span="6" style="text-align: left">&nbsp;&nbsp;<router-link  :to="{path:'/forget'}" style="color: aquamarine" id="toChangePa">忘记密码</router-link>></el-col>
       </el-form-item>
       </el-form>
     </div>
@@ -50,7 +49,7 @@ export default {
       else {
         callback()
       }
-    }
+    };
     //规则，用于前端验证密码是否合法
     const validatePassword = (rule, value, callback) => {
       if(value === ''){
@@ -88,26 +87,17 @@ export default {
           if (valid) {
             login(this.userForm).then(res=> {
               if(res === 1 || res === 2 || res === 3){
-                  if(res === 1 || res === 2){
-                      if(res === 1) {
-                          this.$message({
-                              message: '欢迎您，超级管理员',
-                              type: 'success',
-                              center: true
-                          });
-                      }
-                      else {
-                          this.$message({
-                              message: '欢迎您，管理员',
-                              type: 'success',
-                              center: true
-                          });
-                      }
+                  if(res === 1) {
+                      this.$message({
+                          message: '欢迎您，超级管理员 ' + this.userForm.userName,
+                          type: 'success',
+                          center: true
+                      });
                       this.$router.push({path:'/admin',query: {user:this.userForm.userName}});
                   }
                   else {
                       this.$message({
-                          message: '登录成功',
+                          message: '登录成功，欢迎您 '+ this.userForm.userName,
                           type: 'success',
                           center: true
                       });

@@ -1,7 +1,6 @@
 <template>
   <div id="rootBox" class="rootBox">
     <div id="tableBox" class="tableBox">
-      <template>
         <el-table
           :data="userData"
           v-loading="loading"
@@ -42,13 +41,11 @@
           @size-change="handleSizeChange">
           </el-pagination>
         </div>
-      </template>
     </div>
   </div>
 </template>
 <script>
   import {getAllUser,updatePermission,deleteUser,getUserCount} from "../api/user";
-
   export default {
       created(){
           // 页面加载时调用函数加载用户信息表格
@@ -120,7 +117,10 @@
                           center: true
                       })
                   }
-                  this.getUserTable()
+
+                  setTimeout(()=>{   //设置延迟执行
+                      this.getUserTable()
+                  },200);
               })
           },
           //超级管理员收回用户的管理员权限
@@ -144,7 +144,10 @@
                               center: true
                           })
                       }
+
+                  setTimeout(()=>{   //设置延迟执行
                       this.getUserTable()
+                  },200);
               })
           },
           //删除该用户，询问是否确定
@@ -177,7 +180,10 @@
                           center: true
                       });
                   }
-                  this.getUserTable()
+
+                  setTimeout(()=>{   //设置延迟执行
+                      this.getUserTable()
+                  },200);
               })
           },
           //表格样式
@@ -194,5 +200,4 @@
     margin-left: auto;
     margin-right: auto;
   }
-
 </style>

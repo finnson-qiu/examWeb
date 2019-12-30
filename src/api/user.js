@@ -1,10 +1,5 @@
 import fetch from '../utils/fetch'
 
-export function getAllSubject() {
-  const obj = '';
-  return fetch.get('api/user/subject',obj)
-}
-
 export function validateUser(obj) {
   return fetch.post('api/user/validateUser',obj)
 }
@@ -21,8 +16,8 @@ export function changePa(obj) {
   return fetch.post('api/user/changePassword',obj)
 }
 
-export function getPermission(obj) {
-  return fetch.post('api/user/getPermission',obj)
+export function getOneUserInfo(obj) {
+  return fetch.post('api/user/getOneUserInfo',obj)
 }
 
 export function getAllUser(obj) {

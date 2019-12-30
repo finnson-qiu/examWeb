@@ -3,7 +3,6 @@
     <div class="logoBox"><img alt="logo" :src="logo" style="width: 70%; height:8%"></div>
     <div class="registerBox">
       <div class="reLogoBox"><img alt="register" :src="registerLogo" style="width: 80%"></div>
-      // 注册表单，包含输入框和按钮
       <el-form :model="userForm" status-icon :rules="rules" ref="userForm" label-width="100px" class="demo-ruleForm">
         <el-form-item prop="userName">
         <el-col :span="8">
@@ -45,7 +44,7 @@
           <el-input disabled placeholder=" 科目" ></el-input>
         </el-col>
         <el-col :span="6">
-        <el-select v-model="userForm.subjectNo" placeholder="请选择所授科目">
+        <el-select id="subSelect" v-model="userForm.subjectNo" placeholder="请选择所授科目">
           <el-option
             v-for="item in subOptions"
             :key="item.subjectNo"
@@ -71,7 +70,8 @@
 <script>
   import registerLogo from "../assets/images/reLogo.png"
   import logo from "../assets/images/logoblack.png"
-  import {getAllSubject,validateUser,register} from "../api/user";
+  import {validateUser,register} from "../api/user";
+  import {getAllSubject} from "../api/subject";
 
   export default {
     data(){

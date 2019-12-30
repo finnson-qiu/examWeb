@@ -15,7 +15,7 @@ module.exports = {
         target: 'http://localhost:7777',
         changeOrigin: true,
         pathRewrite: {
-          '^/api': ''
+          '^/api': '+-8·'
         },
       },
     },
@@ -28,7 +28,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */
